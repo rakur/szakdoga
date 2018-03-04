@@ -5,14 +5,10 @@
  */
 package hu.unideb.inf.szakdoga.game;
 
-import hu.unideb.inf.szakdoga.game.InvalidPlacingPositionException;
-import hu.unideb.inf.szakdoga.game.InvalidShootingPositionException;
-import hu.unideb.inf.szakdoga.game.Field;
-import hu.unideb.inf.szakdoga.game.ShipType;
-import hu.unideb.inf.szakdoga.game.GameState;
-import java.util.LinkedList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.LinkedList;
 
 /**
  *The representation of the board game of Battleship.
@@ -20,11 +16,11 @@ import org.slf4j.LoggerFactory;
  * @author Rakur
  */
 public class Game {
-    
+
     /**
      * The logger of the object.
      */
-    private static Logger logger = LoggerFactory.getLogger(Game.class);
+    private static Logger logger = LoggerFactory.getLogger(hu.unideb.inf.szakdoga.model.Game.class);
     /**
      * The playing area of the first player.
      */

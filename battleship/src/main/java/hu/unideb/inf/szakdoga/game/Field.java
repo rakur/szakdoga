@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 package hu.unideb.inf.szakdoga.game;
-
-import hu.unideb.inf.battleship.controller.InvalidPlacingPositionException;
-import hu.unideb.inf.battleship.controller.InvalidShootingPositionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +25,7 @@ public class Field {
     */
     private CellType[][] map;
     /**
-     * Fills up the field with {@link hu.unideb.inf.battleship.model.CellType#WATER}.
+     * Fills up the field with {@link hu.unideb.inf.szakdoga.battleship.model.CellType#WATER}.
      */
     public Field() {
         map = new CellType[10][10];
