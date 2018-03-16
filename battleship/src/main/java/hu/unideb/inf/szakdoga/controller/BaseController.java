@@ -2,15 +2,16 @@ package hu.unideb.inf.szakdoga.controller;
 
 import hu.unideb.inf.szakdoga.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+//@RestController
 public class BaseController {
-    @Autowired
-    GameService gameService;
-
+  //  @Autowired
+    //GameService gameService;
+/*
     @RequestMapping(method = RequestMethod.GET, path = "/test")
     public String test() {
         return "asd";
@@ -26,5 +27,9 @@ public class BaseController {
         StringBuilder sb = new StringBuilder();
         gameService.getAll().forEach(game -> sb.append(game.toString()));
         return sb.toString();
-    }
+    }*//*
+    @GetMapping(path = "/index")
+    public String loadIndexhtml() {
+        return "index";
+    }*/
 }
