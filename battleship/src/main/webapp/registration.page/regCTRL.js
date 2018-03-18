@@ -1,4 +1,4 @@
-app.controller('regCtrl', function($scope, $location, $http) {
+app.controller('RegistrationCtrl', function($scope, $location, $http) {
 
     $scope.user = {userName: '', email : '', password : '', passwordConf : '', userNameError:'', passwordError : '', emailError: ''};
     var valid;
@@ -13,7 +13,7 @@ app.controller('regCtrl', function($scope, $location, $http) {
                 'email' : $scope.user.email,
                 'password' : $scope.user.password
             };
-            $http.post('http://localhost:8080/register',content).then(function () {
+            $http.post('http://localhost:8080/battleship/rest/register',content).then(function () {
                 $location.path("/login")
             }, function () {
                 $scope.user.emailError='is-invalid';
