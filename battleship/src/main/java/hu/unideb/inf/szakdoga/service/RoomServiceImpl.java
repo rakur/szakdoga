@@ -1,10 +1,17 @@
 package hu.unideb.inf.szakdoga.service;
 
 import hu.unideb.inf.szakdoga.model.Room;
+import hu.unideb.inf.szakdoga.model.RoomState;
 import hu.unideb.inf.szakdoga.model.Users;
 import hu.unideb.inf.szakdoga.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+import static hu.unideb.inf.szakdoga.model.RoomState.NEW;
+
+@Component
 public class RoomServiceImpl implements RoomService {
 
     @Autowired
@@ -13,26 +20,43 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private UsersService usersService;
 
+    @Autowired
+    private UserService userService;
+
+
     @Override
-    public void createRoom(Long ownerId) {
-        roomRepository.save(Room.builder().ownerId(ownerId).build());
+    public void createRoom() {
+        Long ownerId = userService.getCurrentUser().getId();
+        roomRepository.save(Room.builder().ownerId(ownerId).ownerReady(false).userReady(false).roomState(NEW).build());
     }
 
     @Override
-    public void joinRoom(Long roomId, Long userId) {
+    public void joinRoom(Long roomId) {
+        Long userId = userService.getCurrentUser().getId();
         roomRepository.updateUserIdByRoomId(roomId, userId);
     }
 
     @Override
-    public void quit(Long roomId, Long userId) {
-        Users users = usersService.getUserById(userId);
-        Room room = roomRepository.findOne(roomId);
-        if (users.getId().equals(room.getUserId())){
-            roomRepository.updateUserIdByRoomId(roomId, null);
+    public List<Room> getAllRooms() {
+        return roomRepository.findAllByRoomState(RoomState.NEW);
+    }
+
+    @Override
+    public void quit() {
+        Users users = userService.getCurrentUser();
+        Room room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
+        if (room.getUserId().equals(users.getId())){
+            roomRepository.updateUserIdByRoomId(room.getId(), null);
         }
-        if (users.getId().equals(room.getOwnerId())){
-            roomRepository.delete(roomId);
+        if (room.getOwnerId().equals(users.getId())){
+            roomRepository.delete(room.getId());
         }
+    }
+
+    @Override
+    public Room getRoom() {
+        Long id = userService.getCurrentUser().getId();
+        return roomRepository.findRoomByOwnerIdOrUserId(id,id);
     }
 
     @Override
@@ -40,10 +64,10 @@ public class RoomServiceImpl implements RoomService {
         Users users = usersService.getUserById(userId);
         Room room = roomRepository.findOne(roomId);
         if (users.getId().equals(room.getUserId())) {
-            roomRepository.updatUserReadyByRoomId(roomId, isReady);
+            roomRepository.updateUserReadyByRoomId(roomId, isReady);
         }
         else {
-            roomRepository.updatOwnerReadyByRoomId(roomId, isReady);
+            roomRepository.updateOwnerReadyByRoomId(roomId, isReady);
         }
     }
 

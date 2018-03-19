@@ -1,4 +1,5 @@
 <ul>
-    <li>{{username}}</li>
+    <li ng-repeat="room in rooms">{{room.id}} {{room.ownerId}} <button ng-click="join(room.id)">Join</button></li>
 </ul>
+<button ng-click="create()">Create room</button>
 <button ng-click="logout()">logout</button>

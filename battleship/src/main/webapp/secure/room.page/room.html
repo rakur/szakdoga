@@ -1,2 +1,7 @@
-<button>Exit to lobby</button>
+<div>welcome to {{room.ownerId}}'s room</div>
+<div>{{room.ownerId}}</div>
+<div>Ready: {{room.ownerReadyState}}</div>
+<div ng-if="user">{{room.user}}</div>
+<div ng-if="user">Ready: {{room.userReadyState}}</div>
+<button ng-click="exit()">Exit to lobby</button>
 <button>Ready</button>
