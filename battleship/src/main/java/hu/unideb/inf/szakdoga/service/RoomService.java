@@ -10,8 +10,7 @@ public interface RoomService {
     void createRoom();
     void joinRoom(Long roomId);
     void quit();
-    void toggleReady(Long roomId, Long userId, Boolean isReady);
-    void startGame(Long roomId);
+    void toggleReady();
     Room getRoom();
     List<Room> getAllRooms();
 }

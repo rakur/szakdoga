@@ -2,7 +2,6 @@ package hu.unideb.inf.szakdoga.controller;
 
 
 import hu.unideb.inf.szakdoga.model.Room;
-import hu.unideb.inf.szakdoga.model.Users;
 import hu.unideb.inf.szakdoga.service.RoomService;
 import hu.unideb.inf.szakdoga.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -45,6 +43,11 @@ public class RoomController {
     @RequestMapping(method = RequestMethod.POST, path = "/{roomId}")
     public ResponseEntity<Void> joinRoom(@PathVariable Long roomId) {
         roomService.joinRoom(roomId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @RequestMapping(method = RequestMethod.PATCH, path="/ready")
+    public ResponseEntity<Void> changeReadyState() {
+        roomService.toggleReady();
         return new ResponseEntity<>(HttpStatus.OK);
     }
  }

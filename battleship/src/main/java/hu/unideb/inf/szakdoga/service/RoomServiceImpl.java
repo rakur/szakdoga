@@ -4,6 +4,7 @@ import hu.unideb.inf.szakdoga.model.Room;
 import hu.unideb.inf.szakdoga.model.RoomState;
 import hu.unideb.inf.szakdoga.model.Users;
 import hu.unideb.inf.szakdoga.repository.RoomRepository;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 import static hu.unideb.inf.szakdoga.model.RoomState.NEW;
 
+@Log4j
 @Component
 public class RoomServiceImpl implements RoomService {
 
@@ -44,11 +46,13 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void quit() {
         Users users = userService.getCurrentUser();
+        log.info("user that wants to exit: " + users.getUsername());
         Room room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
-        if (room.getUserId().equals(users.getId())){
+        log.info("room which they want to quit from "+room.getId());
+        if (users.getId().equals(room.getUserId())){
             roomRepository.updateUserIdByRoomId(room.getId(), null);
         }
-        if (room.getOwnerId().equals(users.getId())){
+        if (users.getId().equals(room.getOwnerId())){
             roomRepository.delete(room.getId());
         }
     }
@@ -60,21 +64,25 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void toggleReady(Long roomId, Long userId, Boolean isReady) {
-        Users users = usersService.getUserById(userId);
-        Room room = roomRepository.findOne(roomId);
+    public void toggleReady() {
+        Users users = userService.getCurrentUser();
+        Room room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
         if (users.getId().equals(room.getUserId())) {
-            roomRepository.updateUserReadyByRoomId(roomId, isReady);
+            roomRepository.updateUserReadyByRoomId(room.getId(), !room.getUserReady());
         }
         else {
-            roomRepository.updateOwnerReadyByRoomId(roomId, isReady);
+            roomRepository.updateOwnerReadyByRoomId(room.getId(), !room.getOwnerReady());
+        }
+        room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
+        if (room.getUserReady() && room.getOwnerReady()) {
+            startGame();
         }
     }
 
-    @Override
-    public void startGame(Long roomId) {
-        if (roomRepository.existsRoomByIdAndOwnerReadyAndUserReady(roomId, true, true)) {
-            roomRepository.updateRoomStateByRoomId(roomId);
-        }
+    private void startGame() {
+        Users users = userService.getCurrentUser();
+        Room room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
+        roomRepository.updateRoomStateByRoomId(room.getId());
+
     }
 }

@@ -47,7 +47,7 @@ public class Game {
     public Game() {
         this.fieldOne = new Field();
         this.fieldTwo = new Field();
-        this.gameState = GameState.PLAYER_ONE_PLACING;
+        this.gameState = GameState.PLAYERS_PLACING;
 
         this.playerOneUnplacedShips = new LinkedList<>();
         this.playerOneUnplacedShips.addLast(ShipType.CARRIER);
@@ -143,7 +143,7 @@ public class Game {
      * @throws InvalidPlacingPositionException when the ship cannot be placed on the current position.
      */
     public void placeShip(int x, int y, boolean vertical) throws InvalidPlacingPositionException {
-        if (gameState == GameState.PLAYER_ONE_PLACING) {
+        if (gameState == GameState.PLAYERS_PLACING) {
             fieldOne.place(playerOneUnplacedShips.getFirst(), x, y, vertical);
             playerOneUnplacedShips.removeFirst();
         } else {
@@ -175,8 +175,8 @@ public class Game {
      */
     private void switchTurn() {
         switch (this.gameState) {
-            case PLAYER_ONE_PLACING:
-                if (!playerOneUnplacedShips.isEmpty()) {
+            case PLAYERS_PLACING:
+                /*if (!playerOneUnplacedShips.isEmpty()) {
                     gameState = GameState.PLAYER_ONE_PLACING;
                 } else {
                     if (!playerTwoUnplacedShips.isEmpty()) {
@@ -184,17 +184,9 @@ public class Game {
                     } else {
                         gameState = GameState.PLAYER_TWO_SHOOTING;
                     }
-                }
-                break;
-            case PLAYER_TWO_PLACING:
-                if (!playerTwoUnplacedShips.isEmpty()) {
-                    gameState = GameState.PLAYER_TWO_PLACING;
-                } else {
-                    if (!playerOneUnplacedShips.isEmpty()) {
-                        gameState = GameState.PLAYER_ONE_PLACING;
-                    } else {
-                        gameState = GameState.PLAYER_ONE_SHOOTING;
-                    }
+                }*/
+                if (playerOneUnplacedShips.isEmpty() && playerTwoUnplacedShips.isEmpty()) {
+                    gameState = GameState.PLAYER_ONE_SHOOTING;
                 }
                 break;
             case PLAYER_ONE_SHOOTING:

@@ -20,14 +20,14 @@ import java.util.LinkedList;
 
 /**
  *The representation of the board game of Battleship.
- * 
+ *
  * @author Rakur
  */
 @Entity
 @Builder
 @Data
 @Table(name = "Game")
-public class Game implements Serializable {
+public class GameEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,21 +38,21 @@ public class Game implements Serializable {
 
 
     @Column(name = "playerOneField")
-    private Field playerOneField;
+    private String playerOneField;
 
 
     @Column(name = "playerTwoField")
-    private Field playerTwoField;
+    private String playerTwoField;
 
     @Column(name = "playerOneUnplacedShips")
-    private LinkedList<ShipType> playerOneUnplacedShips;
+    private String playerOneUnplacedShips;
 
     @Column(name = "playerTwoUnplacedShips")
-    private LinkedList<ShipType> playerTwoUnplacedShips;
+    private String playerTwoUnplacedShips;
 
-    protected Game() {}
+    protected GameEntity() {}
 
-    public Game(GameState gameState) {
+    public GameEntity(GameState gameState) {
         this.gameState = gameState;
     }
 
@@ -71,7 +71,6 @@ public class Game implements Serializable {
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
-
 
     @Override
     public String toString() {

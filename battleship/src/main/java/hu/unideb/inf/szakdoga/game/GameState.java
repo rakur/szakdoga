@@ -14,14 +14,8 @@ public enum GameState {
     /**
      * The first player is placing their ships.
      */
-    PLAYER_ONE_PLACING("Player One Placing"),
-    /**
-     * The second player is placing their ships.
-     */
-    PLAYER_TWO_PLACING("Player Two Placing"),
-    /**
-     * The first player is shooting.
-     */
+    PLAYERS_PLACING("Players Placing"),
+
     PLAYER_ONE_SHOOTING("Player One Shooting"),
     /**
      * The second player is placing their ships.

@@ -14,6 +14,7 @@ app.controller('LobbyCtrl', function($rootScope, $scope, $location, $http, $inte
     $scope.create = function () {
         $http.post('/battleship/rest/room', {}).then(function () {
             console.log("room created");
+            $location.path("/room");
         }, function () {
             console.log("failed");
         })
@@ -26,14 +27,23 @@ app.controller('LobbyCtrl', function($rootScope, $scope, $location, $http, $inte
             console.log("nem tud belépni");
         })
     };
-
-    $interval(function () {
+    $http.get('/battleship/rest/room').then(function (response) {
+        if (response.data !== "") {
+            $location.path("/room");
+        }
+        console.log(response);
+    });
+    $scope.refresh = function () {
         $http.get('/battleship/rest/room/getall').then(function (response) {
             $scope.rooms = response.data;
         }, function () {
             console.log("a listázás nem okos")
-        })
-    },1000);
+        });
+    };
+    var promise = $interval($scope.refresh, 1000);
+    $scope.$on('$destroy', function () {
+        if (promise)
+            $interval.cancel(promise)
+    });
     $scope.username = $rootScope.loggedInUser;
-
 });
