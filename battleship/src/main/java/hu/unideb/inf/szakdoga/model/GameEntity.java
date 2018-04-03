@@ -5,20 +5,12 @@
  */
 package hu.unideb.inf.szakdoga.model;
 
-import hu.unideb.inf.szakdoga.game.InvalidPlacingPositionException;
-import hu.unideb.inf.szakdoga.game.InvalidShootingPositionException;
-import hu.unideb.inf.szakdoga.game.Field;
-import hu.unideb.inf.szakdoga.game.ShipType;
-import hu.unideb.inf.szakdoga.game.GameState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CollectionType;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.LinkedList;
 
 /**
  *The representation of the board game of Battleship.

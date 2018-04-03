@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -15,8 +14,8 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE Room r SET r.userId = :userId, r.userReady = false WHERE r.id = :roomId")
-    void updateUserIdByRoomId(@Param("roomId") Long roomId, @Param ("userId")Long userId);
+    @Query("UPDATE Room r SET r.userId = :userId, r.userReady = false, r.roomState = :roomState WHERE r.id = :roomId")
+    void updateUserIdByRoomId(@Param("roomId") Long roomId, @Param ("userId") Long userId, @Param("roomState") RoomState roomState);
 
     @Transactional
     @Modifying(clearAutomatically = true)
@@ -41,4 +40,6 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
     Room findRoomByOwnerIdOrUserId(Long ownerId, Long userId);
 
     List<Room> findAllByRoomState(RoomState roomState);
+
+    Room getRoomById(Long roomId);
 }

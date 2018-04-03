@@ -1,7 +1,7 @@
 package hu.unideb.inf.szakdoga.service;
 
-import hu.unideb.inf.szakdoga.game.InvalidPlacingPositionException;
-import hu.unideb.inf.szakdoga.game.InvalidShootingPositionException;
+import hu.unideb.inf.szakdoga.exceptions.InvalidPlacingPositionException;
+import hu.unideb.inf.szakdoga.exceptions.InvalidShootingPositionException;
 import hu.unideb.inf.szakdoga.model.Game;
 import hu.unideb.inf.szakdoga.model.GameEntity;
 import org.springframework.stereotype.Service;

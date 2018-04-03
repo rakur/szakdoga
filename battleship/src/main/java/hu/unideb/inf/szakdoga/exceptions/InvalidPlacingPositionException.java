@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hu.unideb.inf.szakdoga.game;
+package hu.unideb.inf.szakdoga.exceptions;
 
 /**
  * Thrown when the ship can not be placed on the position.

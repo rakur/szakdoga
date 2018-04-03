@@ -13,7 +13,7 @@ app.controller('RegistrationCtrl', function($scope, $location, $http) {
                 'email' : $scope.user.email,
                 'password' : $scope.user.password
             };
-            $http.post('http://localhost:8080/battleship/rest/register',content).then(function () {
+            $http.post('http://192.168.1.143:8080/battleship/rest/register',content).then(function () {
                 $location.path("/login")
             }, function () {
                 $scope.user.emailError='is-invalid';

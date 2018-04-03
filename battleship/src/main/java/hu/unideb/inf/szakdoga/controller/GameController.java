@@ -1,19 +1,12 @@
 package hu.unideb.inf.szakdoga.controller;
 
 
-import hu.unideb.inf.szakdoga.converters.GameEntityToGameConverter;
-import hu.unideb.inf.szakdoga.game.InvalidPlacingPositionException;
-import hu.unideb.inf.szakdoga.game.InvalidShootingPositionException;
+import hu.unideb.inf.szakdoga.exceptions.InvalidPlacingPositionException;
+import hu.unideb.inf.szakdoga.exceptions.InvalidShootingPositionException;
 import hu.unideb.inf.szakdoga.model.Game;
-import hu.unideb.inf.szakdoga.model.GameEntity;
-import hu.unideb.inf.szakdoga.model.Room;
-import hu.unideb.inf.szakdoga.model.Users;
 import hu.unideb.inf.szakdoga.service.GameService;
 import hu.unideb.inf.szakdoga.service.RoomService;
 import hu.unideb.inf.szakdoga.service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

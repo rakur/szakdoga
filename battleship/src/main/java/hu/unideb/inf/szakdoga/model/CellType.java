@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hu.unideb.inf.szakdoga.game;
+package hu.unideb.inf.szakdoga.model;
 
 /**
  * The enumeration of what a cell can represent on the {@link hu.unideb.inf.battleship.model.Field}.

@@ -1,0 +1,56 @@
+table {
+    margin: 20px auto;
+}
+
+table button {
+    height: 75px;
+    width: 75px;
+}
+
+.checkbox {
+    display: block;
+    margin: 0 auto;
+}
+
+.WATER {
+    background: cornflowerblue;
+}
+
+.HIT {
+    background: crimson;
+}
+
+.MISS {
+    background: ghostwhite;
+}
+
+.DESTROYER {
+    background: #d1d1d1;
+}
+
+.SUBMARINE {
+    background: #959595;
+}
+
+.CRUISER {
+    background: #959595;
+}
+
+.BATTLESHIP {
+    background: #555555;
+}
+
+.CARRIER {
+    background: #222222;
+}
+
+.gamestate {
+    text-align: center;
+    font-size: 30px;
+    padding-bottom: 20px;
+}
+
+.horizontal {
+    font-size: 20px;
+    text-align: center;
+}

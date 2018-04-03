@@ -1,8 +1,8 @@
 package hu.unideb.inf.szakdoga.converters;
 
-import hu.unideb.inf.szakdoga.game.CellType;
-import hu.unideb.inf.szakdoga.game.Field;
-import hu.unideb.inf.szakdoga.game.ShipType;
+import hu.unideb.inf.szakdoga.model.CellType;
+import hu.unideb.inf.szakdoga.model.Field;
+import hu.unideb.inf.szakdoga.model.ShipType;
 import hu.unideb.inf.szakdoga.model.Game;
 import hu.unideb.inf.szakdoga.model.GameEntity;
 import org.springframework.core.convert.converter.Converter;

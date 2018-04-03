@@ -1,6 +1,6 @@
 package hu.unideb.inf.szakdoga.repository;
 
-import hu.unideb.inf.szakdoga.game.GameState;
+import hu.unideb.inf.szakdoga.model.GameState;
 import hu.unideb.inf.szakdoga.model.GameEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

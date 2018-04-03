@@ -2,10 +2,10 @@ package hu.unideb.inf.szakdoga.service;
 
 import hu.unideb.inf.szakdoga.converters.GameEntityToGameConverter;
 import hu.unideb.inf.szakdoga.converters.GameToGameEntityConverter;
-import hu.unideb.inf.szakdoga.game.*;
+import hu.unideb.inf.szakdoga.exceptions.InvalidPlacingPositionException;
+import hu.unideb.inf.szakdoga.exceptions.InvalidShootingPositionException;
+import hu.unideb.inf.szakdoga.model.*;
 import hu.unideb.inf.szakdoga.model.Game;
-import hu.unideb.inf.szakdoga.model.GameEntity;
-import hu.unideb.inf.szakdoga.model.Room;
 import hu.unideb.inf.szakdoga.repository.GameRepository;
 import hu.unideb.inf.szakdoga.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,6 @@ public class GameServiceImpl implements GameService{
         GameEntity gameEntity = gameRepository.save(converter.convert(game));
         long id = userService.getCurrentUser().getId();
         Room room = roomRepository.findRoomByOwnerIdOrUserId(id,id);
-        System.out.println(gameEntity.getId());
         roomRepository.updateGameIdByRoomId(gameEntity.getId(), room.getId());
     }
 

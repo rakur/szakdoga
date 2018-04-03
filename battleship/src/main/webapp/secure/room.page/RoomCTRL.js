@@ -3,14 +3,23 @@ app.controller('RoomCtrl', function($rootScope, $scope, $location, $http, $inter
         $location.path("/");
     }
     $scope.room = {};
+    $scope.user = {};
 
     $scope.exit = function () {
         $http.post("/battleship/rest/room/quit", {}).then(function () {
             $location.path("/lobby");
         }, function () {
-            console.log("nem sikerült kilépni");
         })
     };
+    $http.get("/battleship/rest/room").then(function (response) {
+        if (!response.data)
+            $location.path("/lobby");
+        $scope.room = response.data;
+        if ($scope.room.roomState === "ONGOING") {
+            $location.path("/game");
+        }
+    }, function () {
+    });
     $scope.refresh = function () {
         $http.get("/battleship/rest/room").then(function (response) {
             if (!response.data)
@@ -20,15 +29,12 @@ app.controller('RoomCtrl', function($rootScope, $scope, $location, $http, $inter
                 $location.path("/game");
             }
         }, function () {
-            console.log("nem jó a szoba");
         });
     };
     $scope.changeReadyState = function () {
         $http.patch("/battleship/rest/room/ready").then(function () {
-            console.log("ready/unready")
             $scope.refresh();
         }, function () {
-            console.log("nem tud readyzni")
         })
     };
 

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hu.unideb.inf.szakdoga.game;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+package hu.unideb.inf.szakdoga.model;
+import hu.unideb.inf.szakdoga.exceptions.InvalidPlacingPositionException;
+import hu.unideb.inf.szakdoga.exceptions.InvalidShootingPositionException;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

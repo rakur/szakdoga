@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static hu.unideb.inf.szakdoga.model.RoomState.FULL;
 import static hu.unideb.inf.szakdoga.model.RoomState.NEW;
 
 @Log4j
@@ -37,13 +38,16 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void joinRoom(Long roomId) {
-        Long userId = userService.getCurrentUser().getId();
-        roomRepository.updateUserIdByRoomId(roomId, userId);
+        Room room = roomRepository.getRoomById(roomId);
+        if (room.getRoomState() == NEW) {
+            Long userId = userService.getCurrentUser().getId();
+            roomRepository.updateUserIdByRoomId(roomId, userId, FULL);
+        }
     }
 
     @Override
     public List<Room> getAllRooms() {
-        return roomRepository.findAllByRoomState(RoomState.NEW);
+        return roomRepository.findAllByRoomState(NEW);
     }
 
     @Override
@@ -53,7 +57,7 @@ public class RoomServiceImpl implements RoomService {
         Room room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
         log.info("room which they want to quit from "+room.getId());
         if (users.getId().equals(room.getUserId())){
-            roomRepository.updateUserIdByRoomId(room.getId(), null);
+            roomRepository.updateUserIdByRoomId(room.getId(), null, NEW);
         }
         if (users.getId().equals(room.getOwnerId())){
             roomRepository.delete(room.getId());
@@ -77,7 +81,7 @@ public class RoomServiceImpl implements RoomService {
             roomRepository.updateOwnerReadyByRoomId(room.getId(), !room.getOwnerReady());
         }
         room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
-        if (room.getUserReady() && room.getOwnerReady() && room.getRoomState() == NEW) {
+        if (room.getUserReady() && room.getOwnerReady() && room.getRoomState() == FULL) {
             startGame();
         }
     }
