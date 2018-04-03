@@ -142,13 +142,15 @@ public class Game {
      * @param vertical The position of the ship.
      * @throws InvalidPlacingPositionException when the ship cannot be placed on the current position.
      */
-    public void placeShip(int x, int y, boolean vertical) throws InvalidPlacingPositionException {
+    public void placeShip(int x, int y, boolean vertical, boolean isFirstPlayerPlacing) throws InvalidPlacingPositionException {
         if (gameState == GameState.PLAYERS_PLACING) {
-            fieldOne.place(playerOneUnplacedShips.getFirst(), x, y, vertical);
-            playerOneUnplacedShips.removeFirst();
-        } else {
-            fieldTwo.place(playerTwoUnplacedShips.getFirst(), x, y, vertical);
-            playerTwoUnplacedShips.removeFirst();
+            if (isFirstPlayerPlacing) {
+                fieldOne.place(playerOneUnplacedShips.getFirst(), x, y, vertical);
+                playerOneUnplacedShips.removeFirst();
+            } else {
+                fieldTwo.place(playerTwoUnplacedShips.getFirst(), x, y, vertical);
+                playerTwoUnplacedShips.removeFirst();
+            }
         }
         this.switchTurn();
     }

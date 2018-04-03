@@ -35,7 +35,7 @@ public enum GameState {
     private final String text;
     /**
      * The constructor that will give value to the text.
-     * 
+     *
      * @param text
      * The current game state.
      */
@@ -44,7 +44,7 @@ public enum GameState {
     }
     /**
      * Returns a string representation of the game state.
-     * 
+     *
      * @return the current game state.
      */
     @Override

@@ -25,6 +25,9 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private GameService gameService;
+
 
     @Override
     public void createRoom() {
@@ -74,7 +77,7 @@ public class RoomServiceImpl implements RoomService {
             roomRepository.updateOwnerReadyByRoomId(room.getId(), !room.getOwnerReady());
         }
         room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
-        if (room.getUserReady() && room.getOwnerReady()) {
+        if (room.getUserReady() && room.getOwnerReady() && room.getRoomState() == NEW) {
             startGame();
         }
     }
@@ -83,6 +86,6 @@ public class RoomServiceImpl implements RoomService {
         Users users = userService.getCurrentUser();
         Room room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
         roomRepository.updateRoomStateByRoomId(room.getId());
-
+        gameService.create();
     }
 }

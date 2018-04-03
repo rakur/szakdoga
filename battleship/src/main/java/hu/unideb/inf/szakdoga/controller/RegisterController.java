@@ -25,6 +25,4 @@ public class RegisterController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
-
-
 }

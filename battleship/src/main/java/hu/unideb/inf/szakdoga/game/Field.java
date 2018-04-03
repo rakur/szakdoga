@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package hu.unideb.inf.szakdoga.game;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Rakur
  */
+@Data
 public class Field {
     
     /**
@@ -36,23 +40,8 @@ public class Field {
         }
     }
     /**
-     * Getter method for the map.
-     * @return the map
-     */
-    public CellType[][] getMap() {
-        return map;
-    }
-    /**
-     * Setter method for the map.
-     * 
-     * @param map the map to set
-     */
-    public void setMap(CellType[][] map) {
-        this.map = map;
-    }
-    /**
      * Checks if all ships has been sunk on the field.
-     * 
+     *
      * @return true if there are no more cell that contain any type of ship,
      * false otherwise
      */
@@ -66,19 +55,19 @@ public class Field {
                 }
             }
         }
-        logger.info("All boats have been sunk");
+        //logger.info("All boats have been sunk");
         return true;
         
     }
     /**
      * Checks if the player can place the ship on the current location.
-     * 
+     *
      * @param x rowID of the cell
      * @param y colID of the cell
      * @param length length of the current ship
      * @param vertical the position of the ship
      * @return true if the actual ship is no longer than the remaining space,
-     * and there is no collision with another already placed ship, 
+     * and there is no collision with another already placed ship,
      * false otherwise
      */
     private boolean canPlace(int x, int y, int length, boolean vertical) {

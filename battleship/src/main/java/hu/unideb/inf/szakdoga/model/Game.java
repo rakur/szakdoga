@@ -10,8 +10,10 @@ import hu.unideb.inf.szakdoga.game.InvalidShootingPositionException;
 import hu.unideb.inf.szakdoga.game.Field;
 import hu.unideb.inf.szakdoga.game.ShipType;
 import hu.unideb.inf.szakdoga.game.GameState;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CollectionType;
 
 import javax.persistence.*;
@@ -23,61 +25,63 @@ import java.util.LinkedList;
  * 
  * @author Rakur
  */
-@Entity
 @Builder
 @Data
-@Table(name = "Game")
 public class Game implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "gameState")
-    @Enumerated(EnumType.ORDINAL)
     private GameState gameState;
-
-
-    @Column(name = "playerOneField")
     private Field playerOneField;
-
-
-    @Column(name = "playerTwoField")
     private Field playerTwoField;
-
-    @Column(name = "playerOneUnplacedShips")
     private LinkedList<ShipType> playerOneUnplacedShips;
-
-    @Column(name = "playerTwoUnplacedShips")
     private LinkedList<ShipType> playerTwoUnplacedShips;
 
-    protected Game() {}
-
-    public Game(GameState gameState) {
-        this.gameState = gameState;
+    public void placeShip(int x, int y, boolean vertical, boolean isFirstPlayerPlacing) throws InvalidPlacingPositionException {
+        if (gameState == GameState.PLAYERS_PLACING) {
+            if (isFirstPlayerPlacing) {
+                playerOneField.place(playerOneUnplacedShips.getFirst(), x, y, vertical);
+                playerOneUnplacedShips.removeFirst();
+            } else {
+                playerTwoField.place(playerTwoUnplacedShips.getFirst(), x, y, vertical);
+                playerTwoUnplacedShips.removeFirst();
+            }
+        }
+        this.switchTurn();
     }
 
-    public Long getId() {
-        return id;
+    public boolean shoot(int x, int y) throws InvalidShootingPositionException {
+        boolean shootResult;
+        if (gameState == GameState.PLAYER_ONE_SHOOTING) {
+            shootResult = playerTwoField.shoot(x, y);
+        } else {
+            shootResult = playerOneField.shoot(x, y);
+        }
+        this.switchTurn();
+        return shootResult;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private void switchTurn() {
+        switch (this.gameState) {
+            case PLAYERS_PLACING:
+                if (playerOneUnplacedShips.isEmpty() && playerTwoUnplacedShips.isEmpty()) {
+                    gameState = GameState.PLAYER_ONE_SHOOTING;
+                }
+                break;
+            case PLAYER_ONE_SHOOTING:
+                if (playerTwoField.isAllBoatsSunken()) {
+                    gameState = GameState.PLAYER_ONE_WON;
+                } else {
+                    gameState = GameState.PLAYER_TWO_SHOOTING;
+                }
+                break;
+            case PLAYER_TWO_SHOOTING:
+                if (playerOneField.isAllBoatsSunken()) {
+                    gameState = GameState.PLAYER_TWO_WON;
+                } else {
+                    gameState = GameState.PLAYER_ONE_SHOOTING;
+                }
+                break;
+        }
     }
 
-    public GameState getGameState() {
-        return gameState;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Game{" +
-                "id=" + id +
-                ", gameState=" + gameState +
-                '}';
-    }
 }

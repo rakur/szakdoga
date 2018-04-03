@@ -13,9 +13,12 @@ app.controller('RoomCtrl', function($rootScope, $scope, $location, $http, $inter
     };
     $scope.refresh = function () {
         $http.get("/battleship/rest/room").then(function (response) {
-            $scope.room = response.data;
             if (!response.data)
                 $location.path("/lobby");
+            $scope.room = response.data;
+            if ($scope.room.roomState === "ONGOING") {
+                $location.path("/game");
+            }
         }, function () {
             console.log("nem jó a szoba");
         });

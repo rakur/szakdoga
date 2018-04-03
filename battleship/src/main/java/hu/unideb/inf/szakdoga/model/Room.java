@@ -35,6 +35,6 @@ public class Room implements Serializable{
     private Boolean userReady;
 
     @NotNull
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private RoomState roomState;
 }

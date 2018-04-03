@@ -10,8 +10,10 @@ import hu.unideb.inf.szakdoga.game.InvalidShootingPositionException;
 import hu.unideb.inf.szakdoga.game.Field;
 import hu.unideb.inf.szakdoga.game.ShipType;
 import hu.unideb.inf.szakdoga.game.GameState;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CollectionType;
 
 import javax.persistence.*;
@@ -27,21 +29,22 @@ import java.util.LinkedList;
 @Builder
 @Data
 @Table(name = "Game")
+@AllArgsConstructor
 public class GameEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "gameState")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private GameState gameState;
 
 
-    @Column(name = "playerOneField")
+    @Column(name = "playerOneField", length = 1000)
     private String playerOneField;
 
 
-    @Column(name = "playerTwoField")
+    @Column(name = "playerTwoField", length = 1000)
     private String playerTwoField;
 
     @Column(name = "playerOneUnplacedShips")
