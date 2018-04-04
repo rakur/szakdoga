@@ -1,9 +1,7 @@
 package hu.unideb.inf.szakdoga.controller;
 
-
 import hu.unideb.inf.szakdoga.model.Room;
 import hu.unideb.inf.szakdoga.service.RoomService;
-import hu.unideb.inf.szakdoga.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +15,6 @@ public class RoomController {
 
     @Autowired
     private RoomService roomService;
-
-    @Autowired
-    private UsersService usersService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Room> getRoom() {

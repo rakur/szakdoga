@@ -1,6 +1,5 @@
 package hu.unideb.inf.szakdoga.controller;
 
-
 import hu.unideb.inf.szakdoga.exceptions.InvalidPlacingPositionException;
 import hu.unideb.inf.szakdoga.exceptions.InvalidShootingPositionException;
 import hu.unideb.inf.szakdoga.model.Game;
@@ -16,15 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/rest/game")
 public class GameController {
 
-
     @Autowired
     private GameService gameService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RoomService roomService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Game> getGame() {

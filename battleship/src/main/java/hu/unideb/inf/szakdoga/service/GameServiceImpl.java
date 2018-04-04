@@ -57,8 +57,8 @@ public class GameServiceImpl implements GameService{
 
         GameToGameEntityConverter converter = new GameToGameEntityConverter();
         GameEntity gameEntity = gameRepository.save(converter.convert(game));
-        long id = userService.getCurrentUser().getId();
-        Room room = roomRepository.findRoomByOwnerIdOrUserId(id,id);
+        String userName = userService.getCurrentUser().getUsername();
+        Room room = roomRepository.findRoomByOwnerNameOrUserName(userName,userName);
         roomRepository.updateGameIdByRoomId(gameEntity.getId(), room.getId());
     }
 
@@ -67,17 +67,17 @@ public class GameServiceImpl implements GameService{
         Long gameId = roomService.getRoom().getGameId();
         return gameRepository.getGameById(gameId);*/
         GameEntityToGameConverter gameEntityToGameConverter = new GameEntityToGameConverter();
-        long userId = userService.getCurrentUser().getId();
-        Room room = roomRepository.findRoomByOwnerIdOrUserId(userId,userId);
+        String userName = userService.getCurrentUser().getUsername();
+        Room room = roomRepository.findRoomByOwnerNameOrUserName(userName,userName);
         GameEntity gameEntity = gameRepository.getGameById(room.getGameId());
         if (gameEntity.getGameState() == GameState.PLAYERS_PLACING) {
-            if (room.getOwnerId() == userId)
+            if (room.getOwnerName().equals(userName))
                 return gameEntityToGameConverter.convertToPlayerOnePlacing(gameEntity);
             else
                 return gameEntityToGameConverter.convertToPlayerTwoPlacing(gameEntity);
         }
         else {
-            if (room.getOwnerId() == userId)
+            if (room.getOwnerName().equals(userName))
                 return gameEntityToGameConverter.convertToPlayerOneShooting(gameEntity);
             else
                 return gameEntityToGameConverter.convertToPlayerTwoShooting(gameEntity);
@@ -88,10 +88,10 @@ public class GameServiceImpl implements GameService{
     public void placeShip(int x, int y, boolean isVertical) throws InvalidPlacingPositionException {
         GameEntityToGameConverter gameEntityToGameConverter = new GameEntityToGameConverter();
         GameToGameEntityConverter gameToGameEntityConverter = new GameToGameEntityConverter();
-        long userId = userService.getCurrentUser().getId();
-        Room room = roomRepository.findRoomByOwnerIdOrUserId(userId,userId);
+        String userName = userService.getCurrentUser().getUsername();
+        Room room = roomRepository.findRoomByOwnerNameOrUserName(userName, userName);
         Game game = gameEntityToGameConverter.convert(gameRepository.getGameById(room.getGameId()));
-        if (userId == room.getOwnerId()) {
+        if (room.getOwnerName().equals(userName)) {
             game.placeShip(x, y, isVertical, true);
             GameEntity gameEntity = gameToGameEntityConverter.convert(game);
             gameRepository.updatePlayerOneField(gameEntity.getId(), gameEntity.getPlayerOneField(),
@@ -109,16 +109,16 @@ public class GameServiceImpl implements GameService{
     public void shoot(int x, int y) throws InvalidShootingPositionException {
         GameEntityToGameConverter gameEntityToGameConverter = new GameEntityToGameConverter();
         GameToGameEntityConverter gameToGameEntityConverter = new GameToGameEntityConverter();
-        long userId = userService.getCurrentUser().getId();
-        Room room = roomRepository.findRoomByOwnerIdOrUserId(userId,userId);
+        String userName = userService.getCurrentUser().getUsername();
+        Room room = roomRepository.findRoomByOwnerNameOrUserName(userName, userName);
         Game game = gameEntityToGameConverter.convert(gameRepository.getGameById(room.getGameId()));
-        if (userId == room.getOwnerId() && game.getGameState() == GameState.PLAYER_ONE_SHOOTING) {
+        if (room.getOwnerName().equals(userName) && game.getGameState() == GameState.PLAYER_ONE_SHOOTING) {
             game.shoot(x, y);
             GameEntity gameEntity = gameToGameEntityConverter.convert(game);
             gameRepository.updatePlayerTwoField2(gameEntity.getId(), gameEntity.getPlayerTwoField(),
                     gameEntity.getGameState());
         }
-        if (userId == room.getUserId() && game.getGameState() == GameState.PLAYER_TWO_SHOOTING){
+        if (room.getUserName().equals(userName) && game.getGameState() == GameState.PLAYER_TWO_SHOOTING){
             game.shoot(x, y);
             GameEntity gameEntity = gameToGameEntityConverter.convert(game);
             gameRepository.updatePlayerOneField2(gameEntity.getId(), gameEntity.getPlayerOneField(),
@@ -128,11 +128,11 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public void finish() {
-        long userId = userService.getCurrentUser().getId();
-        Room room = roomRepository.findRoomByOwnerIdOrUserId(userId,userId);
+        String userName = userService.getCurrentUser().getUsername();
+        Room room = roomRepository.findRoomByOwnerNameOrUserName(userName, userName);
         GameEntity gameEntity = gameRepository.getGameById(room.getGameId());
         if (gameEntity.getGameState() != GameState.PLAYER_ONE_WON && gameEntity.getGameState() != GameState.PLAYER_TWO_WON) {
-            if (room.getOwnerId() == userId) {
+            if (room.getOwnerName() == userName) {
                 gameRepository.updateGameState(gameEntity.getId(), GameState.PLAYER_TWO_WON);
             }
             else {

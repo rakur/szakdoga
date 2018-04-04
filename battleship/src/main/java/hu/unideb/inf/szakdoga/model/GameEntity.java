@@ -1,22 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.unideb.inf.szakdoga.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- *The representation of the board game of Battleship.
- *
- * @author Rakur
- */
 @Entity
 @Builder
 @Data
@@ -67,11 +56,4 @@ public class GameEntity implements Serializable {
         this.gameState = gameState;
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                "id=" + id +
-                ", gameState=" + gameState +
-                '}';
-    }
 }

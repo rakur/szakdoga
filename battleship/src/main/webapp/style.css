@@ -1,3 +1,7 @@
+body {
+    background: #00d4ff;
+}
+
 table {
     margin: 20px auto;
 }
@@ -53,4 +57,36 @@ table button {
 .horizontal {
     font-size: 20px;
     text-align: center;
+}
+
+.rooms {
+
+}
+
+h1 {
+    text-align: center;
+    margin: 60px;
+}
+
+h3 {
+    margin-bottom: 30px;
+}
+
+h4 {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form {
+    display: inline-block;
+    text-align: center;
+    width: 600px;
+    max-width: 600px;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.btn {
+    margin-bottom: 15px;
+    margin-top: 30px;
 }

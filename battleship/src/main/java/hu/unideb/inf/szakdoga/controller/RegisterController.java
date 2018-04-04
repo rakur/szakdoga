@@ -23,6 +23,5 @@ public class RegisterController {
     public ResponseEntity<Void> register(@RequestBody Users user) {
         usersService.register(user);
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
 }

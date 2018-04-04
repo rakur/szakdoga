@@ -21,9 +21,6 @@ public class RoomServiceImpl implements RoomService {
     private RoomRepository roomRepository;
 
     @Autowired
-    private UsersService usersService;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
@@ -32,16 +29,16 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void createRoom() {
-        Long ownerId = userService.getCurrentUser().getId();
-        roomRepository.save(Room.builder().ownerId(ownerId).ownerReady(false).userReady(false).roomState(NEW).build());
+        String ownerName = userService.getCurrentUser().getUsername();
+        roomRepository.save(Room.builder().ownerName(ownerName).ownerReady(false).userReady(false).roomState(NEW).build());
     }
 
     @Override
     public void joinRoom(Long roomId) {
         Room room = roomRepository.getRoomById(roomId);
         if (room.getRoomState() == NEW) {
-            Long userId = userService.getCurrentUser().getId();
-            roomRepository.updateUserIdByRoomId(roomId, userId, FULL);
+            String userName = userService.getCurrentUser().getUsername();
+            roomRepository.updateUserNameByRoomId(roomId, userName, FULL);
         }
     }
 
@@ -54,33 +51,33 @@ public class RoomServiceImpl implements RoomService {
     public void quit() {
         Users users = userService.getCurrentUser();
         log.info("user that wants to exit: " + users.getUsername());
-        Room room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
+        Room room = roomRepository.findRoomByOwnerNameOrUserName(users.getUsername(), users.getUsername());
         log.info("room which they want to quit from "+room.getId());
-        if (users.getId().equals(room.getUserId())){
-            roomRepository.updateUserIdByRoomId(room.getId(), null, NEW);
+        if (users.getUsername().equals(room.getUserName())){
+            roomRepository.updateUserNameByRoomId(room.getId(), null, NEW);
         }
-        if (users.getId().equals(room.getOwnerId())){
+        if (users.getUsername().equals(room.getOwnerName())){
             roomRepository.delete(room.getId());
         }
     }
 
     @Override
     public Room getRoom() {
-        Long id = userService.getCurrentUser().getId();
-        return roomRepository.findRoomByOwnerIdOrUserId(id,id);
+        String name = userService.getCurrentUser().getUsername();
+        return roomRepository.findRoomByOwnerNameOrUserName(name,name);
     }
 
     @Override
     public void toggleReady() {
         Users users = userService.getCurrentUser();
-        Room room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
-        if (users.getId().equals(room.getUserId())) {
+        Room room = roomRepository.findRoomByOwnerNameOrUserName(users.getUsername(), users.getUsername());
+        if (users.getUsername().equals(room.getUserName())) {
             roomRepository.updateUserReadyByRoomId(room.getId(), !room.getUserReady());
         }
         else {
             roomRepository.updateOwnerReadyByRoomId(room.getId(), !room.getOwnerReady());
         }
-        room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
+        room = roomRepository.findRoomByOwnerNameOrUserName(users.getUsername(), users.getUsername());
         if (room.getUserReady() && room.getOwnerReady() && room.getRoomState() == FULL) {
             startGame();
         }
@@ -88,7 +85,7 @@ public class RoomServiceImpl implements RoomService {
 
     private void startGame() {
         Users users = userService.getCurrentUser();
-        Room room = roomRepository.findRoomByOwnerIdOrUserId(users.getId(), users.getId());
+        Room room = roomRepository.findRoomByOwnerNameOrUserName(users.getUsername(), users.getUsername());
         roomRepository.updateRoomStateByRoomId(room.getId());
         gameService.create();
     }

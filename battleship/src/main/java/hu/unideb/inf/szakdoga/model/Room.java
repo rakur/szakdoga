@@ -16,6 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Room implements Serializable{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,10 +24,10 @@ public class Room implements Serializable{
     private Long gameId;
 
     @NotNull
-    private Long ownerId;
+    private String ownerName;
 
 
-    private Long userId;
+    private String userName;
 
     @NotNull
     private Boolean ownerReady;

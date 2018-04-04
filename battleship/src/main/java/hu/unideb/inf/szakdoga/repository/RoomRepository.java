@@ -14,8 +14,8 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE Room r SET r.userId = :userId, r.userReady = false, r.roomState = :roomState WHERE r.id = :roomId")
-    void updateUserIdByRoomId(@Param("roomId") Long roomId, @Param ("userId") Long userId, @Param("roomState") RoomState roomState);
+    @Query("UPDATE Room r SET r.userName = :userName, r.userReady = false, r.roomState = :roomState WHERE r.id = :roomId")
+    void updateUserNameByRoomId(@Param("roomId") Long roomId, @Param ("userName") String userName, @Param("roomState") RoomState roomState);
 
     @Transactional
     @Modifying(clearAutomatically = true)
@@ -37,7 +37,7 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
     @Query("UPDATE Room r SET r.gameId = :gameId where r.id = :roomId")
     void updateGameIdByRoomId(@Param("gameId") Long gameId, @Param("roomId") Long roomId);
 
-    Room findRoomByOwnerIdOrUserId(Long ownerId, Long userId);
+    Room findRoomByOwnerNameOrUserName(String ownerName, String userName);
 
     List<Room> findAllByRoomState(RoomState roomState);
 

@@ -24,15 +24,15 @@ app.controller('LobbyCtrl', function($rootScope, $scope, $location, $http, $inte
         }, function () {
         })
     };
-    $http.get('/battleship/rest/room').then(function (response) {
-        if (response.data !== "") {
+    $http.get('/battleship/rest/room/').then(function (response) {
+        if (response.data) {
             $location.path("/room");
         }
     });
     $scope.refresh = function () {
         $http.get('/battleship/rest/room/getall').then(function (response) {
-        if (response.data !== "") {
-            $location.path("/room");
+        if (!response) {
+            $location.path("/");
         }
         $scope.rooms = response.data;
         }, function () {

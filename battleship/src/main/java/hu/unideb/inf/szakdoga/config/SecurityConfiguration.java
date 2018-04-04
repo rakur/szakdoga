@@ -1,6 +1,5 @@
 package hu.unideb.inf.szakdoga.config;
 
-
 import hu.unideb.inf.szakdoga.service.CustomerUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,18 +30,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.formLogin().and()
                 .logout().logoutUrl("/logout").and()
 				.csrf().disable();
-		/*http.
-				authorizeRequests()
-				.antMatchers("/").permitAll()
-				.antMatchers("/login").permitAll()
-				.antMatchers("/register").permitAll()
-				.antMatchers("/user/**")
-				.authenticated().and().csrf().disable().formLogin()
-				.loginProcessingUrl("/login")
-				.failureUrl("/#!error")
-				.defaultSuccessUrl("/#!activity")
-				.usernameParameter("email")
-				.passwordParameter("password");
-	*/
 	}
 }
