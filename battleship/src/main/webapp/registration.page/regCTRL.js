@@ -10,27 +10,31 @@ app.controller('RegistrationCtrl', function($scope, $location, $http) {
         if (valid) {
             var content = {
                 'userName': $scope.user.userName,
-                'email' : $scope.user.email,
-                'password' : $scope.user.password
+                'email': $scope.user.email,
+                'password': $scope.user.password
             };
-            $http.post('http://localhost:8080/battleship/rest/register',content).then(function () {
+            $http.post('/battleship/rest/register',content).then(function () {
                 $location.path("/login")
-            }, function () {
-                $scope.user.emailError='is-invalid';
+            }, function (response) {
+                if (response.data.message === "Email")
+                    $scope.user.emailError = 'is-invalid';
+                else
+                    $scope.user.userNameError = 'is-invalid';
             })
         }
     };
 
-    validatePassword = function() {
+    var validatePassword = function() {
         if ($scope.user.password !== $scope.user.passwordConf) {
-            $scope.user.passwordError ='is-invalid';
+            $scope.user.passwordError = 'is-invalid';
             valid = false;
         }
     };
 
-    clearErrors = function() {
+    var clearErrors = function() {
         $scope.user.passwordError = '';
-        $scope.user.emailError='';
+        $scope.user.emailError = '';
+        $scope.user.userNameError = '';
     };
 
 });

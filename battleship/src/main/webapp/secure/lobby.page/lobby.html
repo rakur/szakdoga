@@ -1,5 +1,11 @@
-<ul>
-    <li ng-repeat="room in rooms" class="rooms">{{room.ownerName}}<button ng-click="join(room.id)">Join</button></li>
-</ul>
-<button ng-click="create()">Create room</button>
-<button ng-click="logout()">logout</button>
+<div class="card1">
+    <div class="card-body">
+        <div class="card2">
+            <div ng-repeat="room in rooms" class="card-body">{{room.ownerName}}'s room <button ng-click="join(room.id)" class="btn btn-success btn-block join">Join</button></div>
+        </div>
+        <div>
+            <button ng-click="create()" class="btn btn-success btn-block lobby">Create room</button>
+            <button ng-click="logout()" class="btn btn-danger btn-block lobby">Logout</button>
+        </div>
+    </div>
+</div>

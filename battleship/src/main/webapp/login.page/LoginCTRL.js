@@ -1,4 +1,9 @@
 app.controller('LoginCtrl', function($rootScope, $scope, $location, $http) {
+    $scope.user = {credentialError: ''}
+    var clearErrors = function () {
+        $scope.user.credentialError = '';
+    };
+
     var authenticate = function(callback) {
         $http.get('rest/user').then(function(response) {
             $rootScope.loggedInUser = response.data.name;
@@ -9,6 +14,7 @@ app.controller('LoginCtrl', function($rootScope, $scope, $location, $http) {
         });
     };
     authenticate();
+    clearErrors();
     $scope.credentials = {};
     $scope.login = function() {
         $http.post('login', $.param($scope.credentials), {
@@ -19,16 +25,11 @@ app.controller('LoginCtrl', function($rootScope, $scope, $location, $http) {
             authenticate(function() {
                 if ($rootScope.loggedInUser) {
                     $location.path("/lobby");
-                    $scope.error = false;
-                } else {
-                    $location.path("/");
-                    $scope.error = true;
+                }
+                else {
+                    $scope.user.credentialError = 'is-invalid';
                 }
             });
-        },function() {
-            $location.path("/");
-            $scope.error = true;
-            $rootScope.loggedInUser = undefined;
         })
     };
 });

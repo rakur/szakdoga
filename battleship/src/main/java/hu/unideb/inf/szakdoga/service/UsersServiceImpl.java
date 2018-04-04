@@ -22,7 +22,10 @@ public class UsersServiceImpl implements UsersService {
                 !usersRepository.existsUserByUserName(user.getUsername())) {
             usersRepository.save(user);
         } else {
-            throw new UserAlreadyExistsException("Username or Email already exists.");
+            if (usersRepository.existsUserByEmail(user.getEmail()))
+                throw new UserAlreadyExistsException("Email");
+            else
+                throw new UserAlreadyExistsException("Username");
         }
     }
 

@@ -1,5 +1,6 @@
 body {
-    background: #00d4ff;
+    background: #234f58;
+    color: white;
 }
 
 table {
@@ -60,7 +61,7 @@ table button {
 }
 
 .rooms {
-
+    padding-bottom: 30px;
 }
 
 h1 {
@@ -77,16 +78,34 @@ h4 {
     text-align: left;
 }
 
-.form {
+.card {
     display: inline-block;
     text-align: center;
-    width: 600px;
+    margin-left: 35%;
+    margin-right: 35%;
+    background-color: rgba(255,255,255,0.2);
+}
+
+.card1 {
+    display: inline-block;
     max-width: 600px;
     margin-left: 35%;
     margin-right: 35%;
+    background-color: rgba(255,255,255,0.2);
 }
 
 .btn {
     margin-bottom: 15px;
     margin-top: 30px;
+    display: inline-block;
+    text-align: center;
+}
+
+.lobby {
+    display: inline-block;
+}
+
+.join {
+    float: right;
+    margin-top: 0px;
 }
