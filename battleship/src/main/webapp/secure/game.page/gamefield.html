@@ -1,6 +1,6 @@
-<div class="gamestate">{{game.gameState}}</div>
+<div class="gamestate">{{game.gameState === 'PLAYERS_PLACING' ? 'Placing Stage' : game.gameState === 'PLAYER_ONE_SHOOTING' ? playerOne + ' turn to shoot' : playerTwo + ' turn to shoot'}}</div>
 <div ng-if="game.gameState === 'PLAYERS_PLACING'" class="gameInfo">Horizontal</div>
-<div ng-if="game.gameState !== 'PLAYERS_PLACING'" class="gameInfo">{{game.playerOneHits}} vs {{game.playerTwoHits}}</div>
+<div ng-if="game.gameState !== 'PLAYERS_PLACING'" class="gameInfo">{{playerOne}} {{game.playerOneHits}} vs {{game.playerTwoHits}} {{playerTwo}}</div>
 <input type="checkbox" ng-if="game.gameState === 'PLAYERS_PLACING'" ng-model="isHorizontal.horizontal" class="checkbox">
 <table>
     <tr ng-repeat="i in index">

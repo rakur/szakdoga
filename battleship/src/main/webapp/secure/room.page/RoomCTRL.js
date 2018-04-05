@@ -14,6 +14,8 @@ app.controller('RoomCtrl', function($rootScope, $scope, $location, $http, $inter
         if (!response.data)
             $location.path("/lobby");
         $scope.room = response.data;
+        $rootScope.playerOne = response.data.ownerName;
+        $rootScope.playerTwo = response.data.userName;
         if ($scope.room.roomState === "ONGOING") {
             $location.path("/game");
         }
@@ -24,6 +26,8 @@ app.controller('RoomCtrl', function($rootScope, $scope, $location, $http, $inter
             if (!response.data)
                 $location.path("/lobby");
             $scope.room = response.data;
+            $rootScope.playerOne = response.data.ownerName;
+            $rootScope.playerTwo = response.data.userName;
             if ($scope.room.roomState === "ONGOING") {
                 $location.path("/game");
             }

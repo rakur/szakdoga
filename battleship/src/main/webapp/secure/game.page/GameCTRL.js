@@ -21,6 +21,7 @@ app.controller('GameCtrl', function($rootScope, $scope, $location, $http, $inter
                 $location.path("/lobby");
             }
             $scope.game = response.data;
+            console.log($rootScope)
         }, function () {
             $location.path("/lobby");
         })
