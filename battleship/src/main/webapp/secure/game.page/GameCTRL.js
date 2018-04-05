@@ -32,7 +32,7 @@ app.controller('GameCtrl', function($rootScope, $scope, $location, $http, $inter
             $interval.cancel(promise)
     });
 
-    $scope.gameLogic = function (i,j) {
+    $scope.clickEvent = function (i, j) {
         var place = [i,j,1];
         if ($scope.isHorizontal.horizontal)
             place[2]=0;

@@ -18,6 +18,8 @@ public class Game implements Serializable {
     private Field playerTwoField;
     private LinkedList<ShipType> playerOneUnplacedShips;
     private LinkedList<ShipType> playerTwoUnplacedShips;
+    private int playerOneHits;
+    private int playerTwoHits;
 
     public void placeShip(int x, int y, boolean vertical, boolean isFirstPlayerPlacing) throws InvalidPlacingPositionException {
         if (gameState == GameState.PLAYERS_PLACING) {

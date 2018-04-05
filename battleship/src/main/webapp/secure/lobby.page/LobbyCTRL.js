@@ -36,6 +36,7 @@ app.controller('LobbyCtrl', function($rootScope, $scope, $location, $http, $inte
         }
         $scope.rooms = response.data;
         }, function () {
+            $location.path("/");
         });
     };
     var promise = $interval($scope.refresh, 1000);

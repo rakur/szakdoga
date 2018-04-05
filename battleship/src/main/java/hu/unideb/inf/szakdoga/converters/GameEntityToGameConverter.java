@@ -79,11 +79,18 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
     public Game convertToPlayerOneShooting(GameEntity gameEntity) {
         Game rawGame = this.convert(gameEntity);
         CellType[][] map = rawGame.getPlayerTwoField().getMap();
+        CellType[][] otherMap = rawGame.getPlayerOneField().getMap();
+        int playerOneHits = 0;
+        int playerTwoHits = 0;
         for (int i = 0; i < 10; i++) {
             for (int j=0; j < 10; j++) {
                 if (map[i][j] != CellType.WATER && map[i][j] != CellType.MISS && map[i][j] != CellType.HIT) {
                     map[i][j] = CellType.WATER;
                 }
+                if (map[i][j] == CellType.HIT)
+                    playerOneHits++;
+                if (otherMap[i][j] == CellType.HIT)
+                    playerTwoHits++;
             }
         }
 
@@ -91,17 +98,26 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
         return Game.builder()
                 .gameState(rawGame.getGameState())
                 .playerTwoField(rawGame.getPlayerTwoField())
+                .playerOneHits(playerOneHits)
+                .playerTwoHits(playerTwoHits)
                 .build();
     }
 
     public Game convertToPlayerTwoShooting(GameEntity gameEntity) {
         Game rawGame = this.convert(gameEntity);
         CellType[][] map = rawGame.getPlayerOneField().getMap();
+        CellType[][] otherMap = rawGame.getPlayerTwoField().getMap();
+        int playerOneHits = 0;
+        int playerTwoHits = 0;
         for (int i = 0; i < 10; i++) {
             for (int j=0; j < 10; j++) {
                 if (map[i][j] != CellType.WATER && map[i][j] != CellType.MISS && map[i][j] != CellType.HIT) {
                     map[i][j] = CellType.WATER;
                 }
+                if (map[i][j] == CellType.HIT)
+                    playerTwoHits++;
+                if (otherMap[i][j] == CellType.HIT)
+                    playerOneHits++;
             }
         }
 
@@ -109,6 +125,8 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
         return Game.builder()
                 .gameState(rawGame.getGameState())
                 .playerOneField(rawGame.getPlayerOneField())
+                .playerOneHits(playerOneHits)
+                .playerTwoHits(playerTwoHits)
                 .build();
     }
 }

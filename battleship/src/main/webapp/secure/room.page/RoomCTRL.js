@@ -3,7 +3,6 @@ app.controller('RoomCtrl', function($rootScope, $scope, $location, $http, $inter
         $location.path("/");
     }
     $scope.room = {};
-    $scope.user = {};
 
     $scope.exit = function () {
         $http.post("/battleship/rest/room/quit", {}).then(function () {
@@ -29,6 +28,7 @@ app.controller('RoomCtrl', function($rootScope, $scope, $location, $http, $inter
                 $location.path("/game");
             }
         }, function () {
+            $location.path("/lobby");
         });
     };
     $scope.changeReadyState = function () {

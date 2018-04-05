@@ -1,5 +1,18 @@
-<div>welcome to {{room.ownerName}}'s room</div>
-<div>{{room.ownerName}} Ready: {{room.ownerReady}}</div>
-<div ng-if="room.userName">{{room.userName}} Ready: {{room.userReady}}</div>
-<button ng-click="exit()">Exit to lobby</button>
-<button ng-click="changeReadyState()">Ready</button>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Welcome to {{room.ownerName}}'s room</h3>
+                    <div class="card">
+                            <div class="card-body">{{room.ownerName}} {{room.ownerReady ? 'Ready' : "Not Ready"}}</div>
+                            <div ng-if="room.userName" class="card-body">{{room.userName}} {{room.userReady  ? 'Ready' : "Not Ready"}}</div>
+
+                    </div>
+                    <button ng-click="exit()" class="btn btn-danger">Exit to lobby</button>
+                    <button ng-click="changeReadyState()" class="btn btn-success">Ready</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

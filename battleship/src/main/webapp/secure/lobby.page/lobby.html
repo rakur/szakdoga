@@ -1,11 +1,21 @@
-<div class="card1">
-    <div class="card-body">
-        <div class="card2">
-            <div ng-repeat="room in rooms" class="card-body">{{room.ownerName}}'s room <button ng-click="join(room.id)" class="btn btn-success btn-block join">Join</button></div>
-        </div>
-        <div>
-            <button ng-click="create()" class="btn btn-success btn-block lobby">Create room</button>
-            <button ng-click="logout()" class="btn btn-danger btn-block lobby">Logout</button>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li ng-repeat="room in rooms"  class="list-group-item">{{room.ownerName}}'s room
+                                <button ng-click="join(room.id)" class="btn btn-success join">Join</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <button ng-click="create()" class="btn btn-success">Create room</button>
+                        <button ng-click="logout()" class="btn btn-danger">Logout</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

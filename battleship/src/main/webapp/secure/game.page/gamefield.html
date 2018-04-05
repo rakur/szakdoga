@@ -1,12 +1,13 @@
 <div class="gamestate">{{game.gameState}}</div>
-<div ng-if="game.gameState === 'PLAYERS_PLACING'" class="horizontal">Horizontal</div>
+<div ng-if="game.gameState === 'PLAYERS_PLACING'" class="gameInfo">Horizontal</div>
+<div ng-if="game.gameState !== 'PLAYERS_PLACING'" class="gameInfo">{{game.playerOneHits}} vs {{game.playerTwoHits}}</div>
 <input type="checkbox" ng-if="game.gameState === 'PLAYERS_PLACING'" ng-model="isHorizontal.horizontal" class="checkbox">
 <table>
     <tr ng-repeat="i in index">
         <td ng-repeat="j in index">
-            <button ng-class="game.playerOneField ? game.playerOneField.map[i][j] : game.playerTwoField.map[i][j]" ng-click="gameLogic(i,j)"></button>
+            <button ng-class="game.playerOneField ? game.playerOneField.map[i][j] : game.playerTwoField.map[i][j]" ng-click="clickEvent(i,j)"></button>
         </td>
     </tr>
 </table>
 
-<button ng-click="initiateEnd()" class="end">{{game.gameState == 'PLAYER_ONE_WON' || game.gameState == 'PLAYER_TWO_WON' ? 'Back to lobby' : 'Forfeit'}}</button>
+<button ng-click="initiateEnd()" class="btn btn-danger">{{game.gameState == 'PLAYER_ONE_WON' || game.gameState == 'PLAYER_TWO_WON' ? 'Back to lobby' : 'Forfeit'}}</button>
