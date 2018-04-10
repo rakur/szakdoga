@@ -6,7 +6,10 @@ import hu.unideb.inf.szakdoga.model.ShipType;
 import hu.unideb.inf.szakdoga.model.Game;
 import hu.unideb.inf.szakdoga.model.GameEntity;
 import org.springframework.core.convert.converter.Converter;
-import java.util.LinkedList;
+
+import java.util.*;
+
+import static hu.unideb.inf.szakdoga.model.CellType.CARRIER;
 
 public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
     @Override
@@ -24,12 +27,12 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
 
         for (String ship : playerOneUnplacedShipsEntity.replaceAll("(\\[|\\])", "").split(", ")) {
             if (!ship.equals(""))
-                playerOneUnplacedShip.push(ShipType.valueOf(ship));
+                playerOneUnplacedShip.add(ShipType.valueOf(ship));
         }
 
         for (String ship : playerTwoUnplacedShipsEntity.replaceAll("(\\[|\\])", "").split(", ")) {
             if (!ship.equals(""))
-                playerTwoUnplacedShip.push(ShipType.valueOf(ship));
+                playerTwoUnplacedShip.add(ShipType.valueOf(ship));
         }
 
         for (int i=0;i<10;i++) {
@@ -64,6 +67,7 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
                 .gameState(rawGame.getGameState())
                 .playerOneUnplacedShips(rawGame.getPlayerOneUnplacedShips())
                 .playerOneField(rawGame.getPlayerOneField())
+                .playerTwoUnplacedShips(rawGame.getPlayerTwoUnplacedShips())
                 .build();
     }
 
@@ -71,6 +75,7 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
         Game rawGame = this.convert(gameEntity);
         return Game.builder()
                 .gameState(rawGame.getGameState())
+                .playerOneUnplacedShips(rawGame.getPlayerOneUnplacedShips())
                 .playerTwoUnplacedShips(rawGame.getPlayerTwoUnplacedShips())
                 .playerTwoField(rawGame.getPlayerTwoField())
                 .build();
@@ -80,17 +85,47 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
         Game rawGame = this.convert(gameEntity);
         CellType[][] map = rawGame.getPlayerTwoField().getMap();
         CellType[][] otherMap = rawGame.getPlayerOneField().getMap();
-        int playerOneHits = 0;
-        int playerTwoHits = 0;
+        LinkedHashSet<String> playerOneRemaining = new LinkedHashSet<>();
+        LinkedHashSet<String> playerTwoRemaining = new LinkedHashSet<>();
         for (int i = 0; i < 10; i++) {
             for (int j=0; j < 10; j++) {
+                switch (map[i][j]) {
+                    case CARRIER:
+                        playerTwoRemaining.add("Carrier");
+                        break;
+                    case BATTLESHIP:
+                        playerTwoRemaining.add("BattleShip");
+                        break;
+                    case CRUISER:
+                        playerTwoRemaining.add("Cruiser");
+                        break;
+                    case SUBMARINE:
+                        playerTwoRemaining.add("Submarine");
+                        break;
+                    case DESTROYER:
+                        playerTwoRemaining.add("Destroyer");
+                        break;
+                }
+                switch (otherMap[i][j]) {
+                    case CARRIER:
+                        playerOneRemaining.add("Carrier");
+                        break;
+                    case BATTLESHIP:
+                        playerOneRemaining.add("BattleShip");
+                        break;
+                    case CRUISER:
+                        playerOneRemaining.add("Cruiser");
+                        break;
+                    case SUBMARINE:
+                        playerOneRemaining.add("Submarine");
+                        break;
+                    case DESTROYER:
+                        playerOneRemaining.add("Destroyer");
+                        break;
+                }
                 if (map[i][j] != CellType.WATER && map[i][j] != CellType.MISS && map[i][j] != CellType.HIT) {
                     map[i][j] = CellType.WATER;
                 }
-                if (map[i][j] == CellType.HIT)
-                    playerOneHits++;
-                if (otherMap[i][j] == CellType.HIT)
-                    playerTwoHits++;
             }
         }
 
@@ -98,8 +133,8 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
         return Game.builder()
                 .gameState(rawGame.getGameState())
                 .playerTwoField(rawGame.getPlayerTwoField())
-                .playerOneHits(playerOneHits)
-                .playerTwoHits(playerTwoHits)
+                .playerOneRemainingShips(playerOneRemaining)
+                .playerTwoRemainingShips(playerTwoRemaining)
                 .build();
     }
 
@@ -109,8 +144,43 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
         CellType[][] otherMap = rawGame.getPlayerTwoField().getMap();
         int playerOneHits = 0;
         int playerTwoHits = 0;
+        LinkedHashSet<String> playerOneRemaining = new LinkedHashSet<>();
+        LinkedHashSet<String> playerTwoRemaining = new LinkedHashSet<>();
         for (int i = 0; i < 10; i++) {
-            for (int j=0; j < 10; j++) {
+            for (int j=0; j < 10; j++) {switch (map[i][j]) {
+                case CARRIER:
+                    playerOneRemaining.add("Carrier");
+                    break;
+                case BATTLESHIP:
+                    playerOneRemaining.add("BattleShip");
+                    break;
+                case CRUISER:
+                    playerOneRemaining.add("Cruiser");
+                    break;
+                case SUBMARINE:
+                    playerOneRemaining.add("Submarine");
+                    break;
+                case DESTROYER:
+                    playerOneRemaining.add("Destroyer");
+                    break;
+            }
+                switch (otherMap[i][j]) {
+                    case CARRIER:
+                        playerTwoRemaining.add("Carrier");
+                        break;
+                    case BATTLESHIP:
+                        playerTwoRemaining.add("BattleShip");
+                        break;
+                    case CRUISER:
+                        playerTwoRemaining.add("Cruiser");
+                        break;
+                    case SUBMARINE:
+                        playerTwoRemaining.add("Submarine");
+                        break;
+                    case DESTROYER:
+                        playerTwoRemaining.add("Destroyer");
+                        break;
+                }
                 if (map[i][j] != CellType.WATER && map[i][j] != CellType.MISS && map[i][j] != CellType.HIT) {
                     map[i][j] = CellType.WATER;
                 }
@@ -125,8 +195,8 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
         return Game.builder()
                 .gameState(rawGame.getGameState())
                 .playerOneField(rawGame.getPlayerOneField())
-                .playerOneHits(playerOneHits)
-                .playerTwoHits(playerTwoHits)
+                .playerOneRemainingShips(playerOneRemaining)
+                .playerTwoRemainingShips(playerTwoRemaining)
                 .build();
     }
 }

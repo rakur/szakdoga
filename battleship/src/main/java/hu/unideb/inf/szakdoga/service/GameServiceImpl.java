@@ -36,6 +36,14 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public void create() {
+
+        LinkedList<ShipType> unplacedShips = new LinkedList<>();
+        unplacedShips.push(ShipType.CARRIER);
+        unplacedShips.push(ShipType.BATTLESHIP);
+        unplacedShips.push(ShipType.CRUISER);
+        unplacedShips.push(ShipType.SUBMARINE);
+        unplacedShips.push(ShipType.DESTROYER);
+
         Game game = Game.builder()
                 .gameState(GameState.PLAYERS_PLACING)
                 .playerOneField(new Field())
@@ -46,6 +54,7 @@ public class GameServiceImpl implements GameService{
                         ShipType.CRUISER,
                         ShipType.SUBMARINE,
                         ShipType.DESTROYER
+                        //unplacedShips
                 )))
                 .playerTwoUnplacedShips(new LinkedList<>(Arrays.asList(
                         ShipType.CARRIER,
@@ -53,6 +62,7 @@ public class GameServiceImpl implements GameService{
                         ShipType.CRUISER,
                         ShipType.SUBMARINE,
                         ShipType.DESTROYER
+                        //unplacedShips
                 ))).build();
 
         GameToGameEntityConverter converter = new GameToGameEntityConverter();
@@ -63,9 +73,7 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
-    public Game getGame() throws NullPointerException {/*
-        Long gameId = roomService.getRoom().getGameId();
-        return gameRepository.getGameById(gameId);*/
+    public Game getGame() throws NullPointerException {
         GameEntityToGameConverter gameEntityToGameConverter = new GameEntityToGameConverter();
         String userName = userService.getCurrentUser().getUsername();
         Room room = roomRepository.findRoomByOwnerNameOrUserName(userName,userName);
@@ -92,8 +100,10 @@ public class GameServiceImpl implements GameService{
         Room room = roomRepository.findRoomByOwnerNameOrUserName(userName, userName);
         Game game = gameEntityToGameConverter.convert(gameRepository.getGameById(room.getGameId()));
         if (room.getOwnerName().equals(userName)) {
+            System.out.println(game.getPlayerOneUnplacedShips());
             game.placeShip(x, y, isVertical, true);
             GameEntity gameEntity = gameToGameEntityConverter.convert(game);
+            System.out.println(gameEntity.getPlayerOneUnplacedShips());
             gameRepository.updatePlayerOneField(gameEntity.getId(), gameEntity.getPlayerOneField(),
                     gameEntity.getPlayerOneUnplacedShips(), gameEntity.getGameState());
         }
@@ -132,7 +142,7 @@ public class GameServiceImpl implements GameService{
         Room room = roomRepository.findRoomByOwnerNameOrUserName(userName, userName);
         GameEntity gameEntity = gameRepository.getGameById(room.getGameId());
         if (gameEntity.getGameState() != GameState.PLAYER_ONE_WON && gameEntity.getGameState() != GameState.PLAYER_TWO_WON) {
-            if (room.getOwnerName() == userName) {
+            if (room.getOwnerName().equals(userName)) {
                 gameRepository.updateGameState(gameEntity.getId(), GameState.PLAYER_TWO_WON);
             }
             else {

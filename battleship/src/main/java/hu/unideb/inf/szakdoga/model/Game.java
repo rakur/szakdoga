@@ -6,7 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 @Builder
 @Data
@@ -18,8 +20,8 @@ public class Game implements Serializable {
     private Field playerTwoField;
     private LinkedList<ShipType> playerOneUnplacedShips;
     private LinkedList<ShipType> playerTwoUnplacedShips;
-    private int playerOneHits;
-    private int playerTwoHits;
+    private LinkedHashSet<String> playerOneRemainingShips;
+    private LinkedHashSet<String> playerTwoRemainingShips;
 
     public void placeShip(int x, int y, boolean vertical, boolean isFirstPlayerPlacing) throws InvalidPlacingPositionException {
         if (gameState == GameState.PLAYERS_PLACING) {
