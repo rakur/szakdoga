@@ -1,9 +1,12 @@
-<div class="gameState">{{game.gameState === 'PLAYERS_PLACING' ? 'Placing Stage' : game.gameState === 'PLAYER_ONE_SHOOTING' ? playerOne + '\'s turn to shoot' : game.gameState === 'PLAYER_TWO_SHOOTING' ? playerTwo + '\'s turn to shoot' : game.gameState === 'PLAYER_ONE_WON' ? playerOne + ' won' : playerTwo + ' won'}}</div>
-<div ng-if="game.gameState === 'PLAYERS_PLACING'" class="gameInfo">Horizontal</div>
-<div ng-if="game.gameState === 'PLAYER_ONE_SHOOTING' || game.gameState === 'PLAYER_TWO_SHOOTING' " class="playerOneInfo">{{playerOne}}'s remaining ships <div ng-repeat="ship in game.playerOneRemainingShips.sort()">{{ship}}</div></div>
-<div ng-if="game.gameState === 'PLAYER_ONE_SHOOTING' || game.gameState === 'PLAYER_TWO_SHOOTING' " class="playerTwoInfo"> {{playerTwo}}'s remaining ships<div ng-repeat="ship in game.playerTwoRemainingShips.sort()">{{ship}}</div></div>
-<div ng-if="game.gameState === 'PLAYERS_PLACING'" class="playerOneInfo"> {{playerOne}}'s unplaced ships <div ng-repeat="ship in game.playerOneUnplacedShips.sort()">{{ship}}</div></div>
-<div ng-if="game.gameState === 'PLAYERS_PLACING'" class="playerTwoInfo"> {{playerTwo}}'s unplaced ships <div ng-repeat="ship in game.playerTwoUnplacedShips.sort()">{{ship}}</div></div>
+<!--
+<div class="gameState">{{game.gameState === 'PLAYERS_PLACING' ? 'PlacingStage' : game.gameState === 'PLAYER_ONE_SHOOTING' ? playerOneShoot' : game.gameState === 'PLAYER_TWO_SHOOTING' ? 'playerTwoShoot' : game.gameState === 'PLAYER_ONE_WON' ? 'playerOneWon' : playerTwo + ' won'}}</div>
+-->
+<div class="gameState" translate="{{game.gameState}}" translate-values="{{current}}"><!--{{game.gameState | translate: current--><!--"' + game.gameState === 'PLAYER_ONE_SHOOTING' ? playerOne--> <!--: game.gameState === 'PLAYER_ONE_WON' ? playerOne : game.gameState === 'PLAYER_TWO_SHOOTING' ? playerTwo : game.gameState === 'PLAYER_TWO_WON ? playerTwo--> }}</div>
+<div ng-if="game.gameState === 'PLAYERS_PLACING'" class="gameInfo">{{'HORIZONTAL' | translate}}</div>
+<div ng-if="game.gameState === 'PLAYER_ONE_SHOOTING' || game.gameState === 'PLAYER_TWO_SHOOTING' " class="playerOneInfo">{{playerOne}}{{' REMAININGSHIPS' | translate}}<div ng-repeat="ship in game.playerOneRemainingShips.sort()">{{ship | translate}}</div></div>
+<div ng-if="game.gameState === 'PLAYER_ONE_SHOOTING' || game.gameState === 'PLAYER_TWO_SHOOTING' " class="playerTwoInfo"> {{playerTwo}}{{' REMAININGSHIPS' | translate}}<div ng-repeat="ship in game.playerTwoRemainingShips.sort()">{{ship | translate}}</div></div>
+<div ng-if="game.gameState === 'PLAYERS_PLACING'" class="playerOneInfo"> {{playerOne}}{{' UNPLACEDSHIPS' | translate}}<div ng-repeat="ship in game.playerOneUnplacedShips.sort()">{{ship | translate}}</div></div>
+<div ng-if="game.gameState === 'PLAYERS_PLACING'" class="playerTwoInfo"> {{playerTwo}}{{' UNPLACEDSHIPS' | translate}}<div ng-repeat="ship in game.playerTwoUnplacedShips.sort()">{{ship | translate}}</div></div>
 <input type="checkbox" ng-if="game.gameState === 'PLAYERS_PLACING'" ng-model="isHorizontal.horizontal" class="checkbox">
 <table>
     <tr ng-repeat="i in index">
@@ -13,4 +16,4 @@
     </tr>
 </table>
 
-<button ng-click="initiateEnd()" class="btn btn-danger">{{game.gameState == 'PLAYER_ONE_WON' || game.gameState == 'PLAYER_TWO_WON' ? 'Back to lobby' : 'Forfeit'}}</button>
+<button ng-click="initiateEnd()" class="btn btn-danger">{{game.gameState == 'PLAYER_ONE_WON' || game.gameState == 'PLAYER_TWO_WON' ? 'TOLOBBY' : 'Forfeit' | translate}}</button>

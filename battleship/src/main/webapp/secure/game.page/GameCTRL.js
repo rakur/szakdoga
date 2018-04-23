@@ -11,6 +11,7 @@ app.controller('GameCtrl', function($rootScope, $scope, $location, $http, $inter
             $location.path("/lobby");
         }
         $scope.game = response.data;
+        $scope.current = { username: response.data.gameState === 'PLAYER_ONE_SHOOTING' ? $rootScope.playerOne : response.data.gameState === 'PLAYER_ONE_WON' ? $rootScope.playerOne : response.data.gameState === 'PLAYER_TWO_SHOOTING' ? $rootScope.playerTwo : response.data.gameState === 'PLAYER_TWO_WON' ? $rootScope.playerTwo : ''};
     }, function () {
         $location.path("/lobby");
     });
@@ -21,6 +22,7 @@ app.controller('GameCtrl', function($rootScope, $scope, $location, $http, $inter
                 $location.path("/lobby");
             }
             $scope.game = response.data;
+            $scope.current = { username: response.data.gameState === 'PLAYER_ONE_SHOOTING' ? $rootScope.playerOne : response.data.gameState === 'PLAYER_ONE_WON' ? $rootScope.playerOne : response.data.gameState === 'PLAYER_TWO_SHOOTING' ? $rootScope.playerTwo : response.data.gameState === 'PLAYER_TWO_WON' ? $rootScope.playerTwo : ''};
         }, function () {
             $location.path("/lobby");
         })

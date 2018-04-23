@@ -1,4 +1,4 @@
-<h1>Welcome to Battleship</h1>
+<h1>{{WELCOMETO}}</h1>
 
 <div class="container">
     <div class="row">
@@ -6,20 +6,20 @@
             <div class="card">
                 <div class="card-body">
                     <form ng-submit="login()">
-                        <h3>Login</h3>
+                        <h3>{{'LOGIN' | translate}}</h3>
                         <div class="form-group">
-                            <h4>Username</h4>
+                            <h4>{{'USERNAME' | translate }}</h4>
                             <input type="text" class="form-control" name="username" placeholder="Username" ng-model="credentials.username" ng-class="user.credentialError">
-                            <strong class="invalid-feedback">Wrong credentials</strong>
+                            <strong class="invalid-feedback">{{'WRONGCREDENTIALS' | translate}}</strong>
                         </div>
                         <div class="form-group">
-                            <h4>Password</h4>
+                            <h4>{{'PASSWORD' | translate}}</h4>
                             <input type="password" class="form-control" name="password" placeholder="Password" ng-model="credentials.password" ng-class="user.credentialError">
-                            <strong class="invalid-feedback">Wrong credentials</strong>
+                            <strong class="invalid-feedback">{{'WRONGCREDENTIALS' | translate}}</strong>
                         </div>
-                        <button type="submit" class="btn btn-success btn-block">Log in</button>
+                        <button type="submit" class="btn btn-success btn-block">{{'LOGIN' | translate}}</button>
                     </form>
-                    <a href="#!register" class="btn btn-primary btn-block">Register</a>
+                    <a href="#!register" class="btn btn-primary btn-block">{{'REGISTER' | translate }}</a>
                 </div>
             </div>
         </div>

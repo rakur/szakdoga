@@ -3,14 +3,14 @@
         <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h3>Welcome to {{room.ownerName}}'s room</h3>
+                    <h3>{{'WELCOME' | translate}}{{room.ownerName}}{{'OWNERTITLE' | translate}}</h3>
                     <div class="card">
-                        <div class="card-body">{{room.ownerName}} <span class="badge badge-pill" ng-class="room.ownerReady ? 'badge-success' : 'badge-danger'">{{room.ownerReady ? 'Ready' : 'Not Ready'}}</span></div>
-                            <div ng-if="room.userName" class="card-body">{{room.userName}} <span class="badge badge-pill" ng-class="room.userReady  ? 'badge-success' : 'badge-danger'">{{room.userReady  ? 'Ready' : 'Not Ready'}}</span></div>
+                        <div class="card-body">{{room.ownerName}} <span class="badge badge-pill" ng-class="room.ownerReady ? 'badge-success' : 'badge-danger'">{{room.ownerReady ? 'Ready' : 'NotReady' | translate}}</span></div>
+                            <div ng-if="room.userName" class="card-body">{{room.userName}} <span class="badge badge-pill" ng-class="room.userReady  ? 'badge-success' : 'badge-danger'">{{room.userReady  ? 'Ready' : 'NotReady' | translate}}</span></div>
 
                     </div>
-                    <button ng-click="exit()" class="btn btn-danger">Exit to lobby</button>
-                    <button ng-click="changeReadyState()" class="btn btn-success">Ready</button>
+                    <button ng-click="exit()" class="btn btn-danger">{{'TOLOBBY' | translate}}</button>
+                    <button ng-click="changeReadyState()" class="btn btn-success">{{'READY' | translate }}</button>
                 </div>
             </div>
         </div>
