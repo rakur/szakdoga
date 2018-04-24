@@ -132,6 +132,7 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
         rawGame.getPlayerTwoField().setMap(map);
         return Game.builder()
                 .gameState(rawGame.getGameState())
+                .playerOneField(rawGame.getPlayerOneField())
                 .playerTwoField(rawGame.getPlayerTwoField())
                 .playerOneRemainingShips(playerOneRemaining)
                 .playerTwoRemainingShips(playerTwoRemaining)
@@ -195,6 +196,7 @@ public class GameEntityToGameConverter implements Converter<GameEntity, Game>{
         return Game.builder()
                 .gameState(rawGame.getGameState())
                 .playerOneField(rawGame.getPlayerOneField())
+                .playerTwoField(rawGame.getPlayerTwoField())
                 .playerOneRemainingShips(playerOneRemaining)
                 .playerTwoRemainingShips(playerTwoRemaining)
                 .build();

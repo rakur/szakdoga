@@ -7,7 +7,7 @@ table {
     margin: 20px auto;
 }
 
-table button {
+.placing > table button {
     height: 65px;
     width: 65px;
 }
@@ -50,17 +50,17 @@ table button {
 }
 
 .playerOneInfo {
-    position: absolute;
     left: 10px;
     top: 50%;
     font-size: 25px;
+    text-align: left;
 }
 
 .playerTwoInfo {
-    position: absolute;
     right: 10px;
     top: 50%;
     font-size: 25px;
+    text-align: right;
 }
 
 .gameState {
@@ -115,6 +115,7 @@ h4 {
     margin-top: 30px;
     display: inline-block;
     text-align: center;
+    float: bottom;
 }
 
 .lobby {
@@ -124,4 +125,46 @@ h4 {
 .join {
     float: right;
     margin-top: 0px;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.flex-playerOne {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 4;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-playerTwo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 4;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-playField {
+    flex-grow: 1;
+    margin: 5px;
+    padding: 5px;
+    vertical-align: top;
+}
+
+.flex-playField > table button {
+    width: 50px;
+    height: 50px;
+}
+
+.flex-info {
+    flex-grow: 2;
+    margin: 5px;
+    padding: 5px;
 }
