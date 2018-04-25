@@ -1,26 +1,36 @@
-<!--
-<div class="gameState">{{game.gameState === 'PLAYERS_PLACING' ? 'PlacingStage' : game.gameState === 'PLAYER_ONE_SHOOTING' ? playerOneShoot' : game.gameState === 'PLAYER_TWO_SHOOTING' ? 'playerTwoShoot' : game.gameState === 'PLAYER_ONE_WON' ? 'playerOneWon' : playerTwo + ' won'}}</div>
--->
-<div class="gameState" translate="{{game.gameState}}" translate-values="{{current}}"><!--{{game.gameState | translate: current--><!--"' + game.gameState === 'PLAYER_ONE_SHOOTING' ? playerOne--> <!--: game.gameState === 'PLAYER_ONE_WON' ? playerOne : game.gameState === 'PLAYER_TWO_SHOOTING' ? playerTwo : game.gameState === 'PLAYER_TWO_WON ? playerTwo--> }}</div>
+<div class="gameState" translate="{{game.gameState}}" translate-values="{{current}}"></div>
 <div ng-if="game.gameState === 'PLAYERS_PLACING'" class="gameInfo">{{'HORIZONTAL' | translate}}</div>
 <input type="checkbox" ng-if="game.gameState === 'PLAYERS_PLACING'" ng-model="isHorizontal.horizontal" class="checkbox">
-<div class="placing">
-    <table ng-if="game.gameState === 'PLAYERS_PLACING'" >
-        <tr ng-repeat="i in index">
-            <td ng-repeat="j in index">
-                <button ng-class="game.playerOneField ? game.playerOneField.map[i][j] : game.playerTwoField.map[i][j]" ng-click="clickEvent(i,j)"></button>
-            </td>
-        </tr>
-    </table>
+<div class="flex-container">
+        <div class="flex-info">
+            <div ng-if="game.gameState === 'PLAYERS_PLACING'" class="playerOneInfo"> {{playerOne}}{{'UNPLACEDSHIPS' | translate}}
+                <div ng-repeat="ship in game.playerOneUnplacedShips.sort()">{{ship | translate}}</div>
+            </div>
+        </div>
+    <div class="placing">
+        <table ng-if="game.gameState === 'PLAYERS_PLACING'" >
+            <tr ng-repeat="i in index">
+                <td ng-repeat="j in index">
+                    <button ng-class="game.playerOneField ? game.playerOneField.map[i][j] : game.playerTwoField.map[i][j]" ng-click="clickEvent(i,j)"></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+        <div class="flex-info">
+            <div ng-if="game.gameState === 'PLAYERS_PLACING'" class="playerTwoInfo"> {{playerTwo}}{{'UNPLACEDSHIPS' | translate}}
+                <div ng-repeat="ship in game.playerTwoUnplacedShips.sort()">{{ship | translate}}</div>
+            </div>
+        </div>
 </div>
 
-<div class="flex-container" ng-if="game.gameState !== 'PLAYERS_PLACING'">
+<div class="flex-container">
     <div class="flex-playerOne">
         <div class="flex-info">
-            <div ng-if="game.gameState === 'PLAYER_ONE_SHOOTING' || game.gameState === 'PLAYER_TWO_SHOOTING' " class="playerOneInfo">{{playerOne}}{{' REMAININGSHIPS' | translate}}<div ng-repeat="ship in game.playerOneRemainingShips.sort()">{{ship | translate}}</div></div>
-            <div ng-if="game.gameState === 'PLAYERS_PLACING'" class="playerOneInfo"> {{playerOne}}{{' UNPLACEDSHIPS' | translate}}<div ng-repeat="ship in game.playerOneUnplacedShips.sort()">{{ship | translate}}</div></div>
+            <div ng-if="game.gameState === 'PLAYER_ONE_SHOOTING' || game.gameState === 'PLAYER_TWO_SHOOTING' " class="playerOneInfo">{{playerOne}}{{'REMAININGSHIPS' | translate}}
+                <div ng-repeat="ship in game.playerOneRemainingShips.sort()">{{ship | translate}}</div>
+            </div>
         </div>
-        <div class="flex-playField">
+        <div class="flex-playField" ng-if="game.gameState !== 'PLAYERS_PLACING'">
             <table class="flex-playerOneField">
                 <tr ng-repeat="i in index">
                     <td ng-repeat="j in index">
@@ -31,7 +41,7 @@
         </div>
     </div>
     <div class="flex-playerTwo">
-        <div class="flex-playField">
+        <div class="flex-playField" ng-if="game.gameState !== 'PLAYERS_PLACING'">
             <table class="flex-playerTwoField">
                 <tr ng-repeat="i in index">
                     <td ng-repeat="j in index">
@@ -41,8 +51,9 @@
             </table>
         </div>
         <div class="flex-info">
-            <div ng-if="game.gameState === 'PLAYER_ONE_SHOOTING' || game.gameState === 'PLAYER_TWO_SHOOTING' " class="playerTwoInfo"> {{playerTwo}}{{' REMAININGSHIPS' | translate}}<div ng-repeat="ship in game.playerTwoRemainingShips.sort()">{{ship | translate}}</div></div>
-            <div ng-if="game.gameState === 'PLAYERS_PLACING'" class="playerTwoInfo"> {{playerTwo}}{{' UNPLACEDSHIPS' | translate}}<div ng-repeat="ship in game.playerTwoUnplacedShips.sort()">{{ship | translate}}</div></div>
+            <div ng-if="game.gameState === 'PLAYER_ONE_SHOOTING' || game.gameState === 'PLAYER_TWO_SHOOTING' " class="playerTwoInfo"> {{playerTwo}}{{'REMAININGSHIPS' | translate}}
+                <div ng-repeat="ship in game.playerTwoRemainingShips.sort()">{{ship | translate}}</div>
+            </div>
         </div>
     </div>
 </div>

@@ -115,4 +115,16 @@ var app = angular.module('Battleship', ['ngRoute', 'pascalprecht.translate'])
                 JOIN: 'Join'
             });
         $translateProvider.preferredLanguage('hu');
+    })
+    .directive('langSelector', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'langselector.html'
+        };
+    })
+    .controller('langCtrl', function ($scope, $translate) {
+        $scope.changeLanguage = function (key) {
+            $translate.use(key);
+            console.log("asd")
+        };
     });
